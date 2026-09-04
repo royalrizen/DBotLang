@@ -5,7 +5,7 @@
 <br>
 
 <p>
-DBotLang is a programming language for building Discord bots. I wanted to make bot development easier by providing built-in concepts for commands, events, variables, and bot logic without the boilerplate of traditional bot frameworks.
+DBotLang is a cute little programming language for building Discord bots. I wanted to make bot development easier by providing built-in concepts for commands, events, variables, and bot logic without the boilerplate of traditional bot frameworks.
 </p>
 
 <div align="center">
