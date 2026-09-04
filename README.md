@@ -1,16 +1,23 @@
 <div align="center">
 <img src="assets/banner.png" alt="DBotLang Banner" width="800">
+    
+<br>
+<br>
+
+![Status](https://img.shields.io/badge/status-in%20development-orange)
+![Language](https://img.shields.io/badge/language-Python-blue)
+![License](https://img.shields.io/badge/license-MIT-green)
+![GitHub Repo Size](https://img.shields.io/github/repo-size/royalrizen/DBotLang)
+![GitHub Stars](https://img.shields.io/github/stars/royalrizen/DBotLang)
+![GitHub Issues](https://img.shields.io/github/issues/royalrizen/DBotLang)
+
 </div>
+
 <br>
 
 # DBotLang <img src="assets/logo.png" alt="DBotLang Banner" width="28">
 
 DBotLang is a programming language for building Discord bots. I wanted to make bot development easier by providing built-in concepts for commands, events, variables, and bot logic without the boilerplate of traditional bot frameworks.
-
-## Status
-
-> [!WARNING]
-> Currently in development.
 
 ## Features
 
