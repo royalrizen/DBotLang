@@ -1,0 +1,2 @@
+command ping:
+    reply "Pong!"
