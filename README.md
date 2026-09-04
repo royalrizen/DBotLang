@@ -16,8 +16,7 @@
 
 <h1>
   DBotLang (.dbot)
-   <img src="assets/logo.png" alt="DBotLang Logo" width="35" align="center">
-</h1>
+   </h1>
 
 DBotLang is a programming language for building Discord bots. I wanted to make bot development easier by providing built-in concepts for commands, events, variables, and bot logic without the boilerplate of traditional bot frameworks.
 
