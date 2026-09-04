@@ -7,7 +7,6 @@
 ![Status](https://img.shields.io/badge/status-in%20development-orange)
 ![Language](https://img.shields.io/badge/language-Python-blue)
 ![License](https://img.shields.io/badge/license-MIT-green)
-![GitHub Repo Size](https://img.shields.io/github/repo-size/royalrizen/DBotLang)
 ![GitHub Stars](https://img.shields.io/github/stars/royalrizen/DBotLang)
 ![GitHub Issues](https://img.shields.io/github/issues/royalrizen/DBotLang)
 
