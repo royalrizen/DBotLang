@@ -1,3 +1,7 @@
+# THIS PROJECT IS ACTIVELY BEING BUILT AND NOT FUNCTIONAL YET.
+
+<br>
+
 <div align="center">
 <img src="assets/banner.png" alt="DBotLang Banner" width="800">
 </div>
@@ -37,3 +41,7 @@
 command ping:
     return "Pong!"
 ```
+
+## License 
+
+This project uses the [MIT License →](LICENSE)
