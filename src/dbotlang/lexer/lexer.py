@@ -364,9 +364,7 @@ def lex(code: str) -> list[Token]:
             at_line_start = True
             continue
 
-        # A "#" starts a comment.
-        #
-        # Everything after "#" on the same line is ignored.
+        # A "#" starts a comment. Everything after "#" on the same line is ignored.
         if char == "#":
             while i < len(code) and code[i] not in "\r\n":
                 i += 1
@@ -375,33 +373,23 @@ def lex(code: str) -> list[Token]:
 
         # A double quote starts a string.
         if char == '"':
-
-            # Save where the string started.
-            # These positions are useful if an error occurs later.
             start_line = line
             start_column = column
-
             # Skip the opening quote.
             i += 1
             column += 1
-
+            
             # Characters belonging to the string are collected here.
             value = []
 
             # Continue until the closing quote is found.
             while i < len(code):
-
-                # Get the current character inside the string.
                 char = code[i]
-
-                # A second double quote ends the string.
                 if char == '"':
 
                     # Skip the closing quote.
                     i += 1
                     column += 1
-
-                    # Create a STRING token containing the collected text.
                     tokens.append(
                         Token(
                             type=TokenType.STRING,
@@ -422,8 +410,7 @@ def lex(code: str) -> list[Token]:
                 # A backslash starts an escape sequence.
                 if char == "\\":
 
-                    # Remember where the escape sequence started
-                    # so an error can point to the correct location.
+                    # Remember where the escape sequence started so an error can point to the correct location.
                     escape_line = line
                     escape_column = column
 
@@ -431,79 +418,51 @@ def lex(code: str) -> list[Token]:
                     i += 1
                     column += 1
 
-                    # A backslash at the end of the file means
-                    # that the escape sequence was never completed.
+                    # A backslash at the end of the file means that the escape sequence was never completed.
                     if i >= len(code):
                         raise LexerError(
                             f"Unterminated escape sequence at line "
                             f"{escape_line}, column {escape_column}"
                         )
-
-                    # Get the character after the backslash.
                     escaped = code[i]
-
-                    # Make sure it is a supported escape sequence.
                     if escaped not in ESCAPE_SEQUENCES:
                         raise LexerError(
                             f"Invalid escape sequence '\\{escaped}' "
                             f"at line {escape_line}, column {escape_column}"
                         )
-
-                    # Convert the escape sequence into its actual character.
                     value.append(ESCAPE_SEQUENCES[escaped])
-
-                    # Move past the escaped character.
                     i += 1
                     column += 1
                     continue
 
-                # This is an ordinary string character.
                 value.append(char)
                 i += 1
                 column += 1
 
-            # If the loop ended without finding a closing quote,
-            # the string was never properly terminated.
+            # If the loop ended without finding a closing quote, the string was never properly terminated.
             else:
                 raise LexerError(
                     f"Unterminated string at line {start_line}, "
                     f"column {start_column}"
                 )
-
-            # The string has been completely processed.
             continue
 
-        # Check whether the current character can begin an identifier.
         if _is_identifier_start(char):
-
-            # Remember where the identifier started.
             start_line = line
             start_column = column
             start_index = i
 
-            # Keep reading characters while they are valid
-            # parts of an identifier.
+            # Keep reading characters while they are valid parts of an identifier.
             while i < len(code) and _is_identifier_part(code[i]):
                 i += 1
                 column += 1
-
-            # Extract the complete word from the source code.
             word = code[start_index:i]
-
-            # First check whether the word is a literal such as
-            # "true", "false", or "null".
             if word in LITERAL_TOKENS:
                 token_type = LITERAL_TOKENS[word]
-
-            # Otherwise check whether it is a reserved keyword.
             elif word in KEYWORDS:
                 token_type = TokenType.KEYWORD
-
-            # If it is neither, it is an ordinary identifier.
             else:
                 token_type = TokenType.IDENTIFIER
-
-            # Add the identified word to the token list.
             tokens.append(
                 Token(
                     type=token_type,
@@ -513,35 +472,21 @@ def lex(code: str) -> list[Token]:
                 )
             )
 
-            # We have encountered actual source code.
             saw_code = True
             continue
 
-        # Check whether the current character starts a number.
         if _is_digit(char):
-
-            # Remember where the number started.
             start_line = line
             start_column = column
             start_index = i
-
-            # Read all digits belonging to the integer part.
             while i < len(code) and _is_digit(code[i]):
                 i += 1
                 column += 1
 
-            # Check whether the number might contain a decimal point.
             if i < len(code) and code[i] == ".":
-
-                # A decimal point is valid only when it is followed
-                # by at least one digit.
                 if i + 1 < len(code) and _is_digit(code[i + 1]):
-
-                    # Consume the decimal point.
                     i += 1
                     column += 1
-
-                    # Consume all digits after the decimal point.
                     while i < len(code) and _is_digit(code[i]):
                         i += 1
                         column += 1
@@ -555,14 +500,7 @@ def lex(code: str) -> list[Token]:
                         f"at line {start_line}, column {start_column}"
                     )
 
-            # If a number is immediately followed by an identifier
-            # character, treat the entire thing as an invalid number.
-            #
-            # For example:
-            #
-            #     123abc
-            #
-            # is rejected instead of becoming NUMBER("123") + IDENTIFIER("abc").
+            # If a number is immediately followed by an identifier character, treat the entire thing as an invalid number. For example: 123abc is rejected instead of becoming NUMBER("123") + IDENTIFIER("abc").
             if i < len(code) and _is_identifier_start(code[i]):
                 while i < len(code) and _is_identifier_part(code[i]):
                     i += 1
@@ -575,8 +513,6 @@ def lex(code: str) -> list[Token]:
                     f"at line {start_line}, column {start_column}"
                 )
 
-            # Create the NUMBER token using the original text
-            # from the source code.
             tokens.append(
                 Token(
                     type=TokenType.NUMBER,
@@ -586,19 +522,14 @@ def lex(code: str) -> list[Token]:
                 )
             )
 
-            # We have encountered actual source code.
             saw_code = True
             continue
 
-        # Check for two-character operators.
-        #
-        # This happens before single-character operators so that
-        # something like "==" is recognized as one token.
+        # Check for two-character operators. This happens before single-character operators so that something like "==" is recognized as one token.
         if i + 1 < len(code):
             two_char = code[i:i + 2]
 
-            # If the two-character sequence is a known operator,
-            # create the corresponding token.
+            # If the two-character sequence is a known operator, create the corresponding token.
             if two_char in TWO_CHAR_TOKENS:
                 tokens.append(
                     Token(
@@ -609,16 +540,12 @@ def lex(code: str) -> list[Token]:
                     )
                 )
 
-                # Move past both characters.
                 i += 2
                 column += 2
-
-                # We have encountered actual source code.
                 saw_code = True
                 continue
 
-        # If it wasn't a two-character operator, check whether
-        # it is one of the supported single-character tokens.
+        # If it wasn't a two-character operator, check whether it is one of the supported single-character tokens.
         if char in SINGLE_CHAR_TOKENS:
             tokens.append(
                 Token(
@@ -629,26 +556,18 @@ def lex(code: str) -> list[Token]:
                 )
             )
 
-            # Move past the character.
             i += 1
             column += 1
-
-            # We have encountered actual source code.
             saw_code = True
             continue
 
-        # If none of the cases above recognized the character,
-        # then DBotLang does not currently know what to do with it.
+        # If none of the cases above recognized the character, then DBotLang does not currently know what to do with it.
         raise LexerError(
             f"Unexpected character '{char}' "
             f"at line {line}, column {column}"
         )
 
-    # If the final token isn't already a NEWLINE or DEDENT,
-    # add a NEWLINE automatically.
-    #
-    # This makes the end of the source code behave consistently
-    # with a line that actually ended with a newline.
+    # If the final token isn't already a NEWLINE or DEDENT, add a NEWLINE automatically. This makes the end of the source code behave consistently with a line that actually ended with a newline.
     if tokens and tokens[-1].type not in {
         TokenType.NEWLINE,
         TokenType.DEDENT,
@@ -662,14 +581,7 @@ def lex(code: str) -> list[Token]:
             )
         )
 
-    # When the source code ends while still inside one or more
-    # indentation levels, close all of those blocks.
-    #
-    # For example, if the indentation stack is:
-    #
-    #     [0, 4, 8]
-    #
-    # two DEDENT tokens are needed before EOF.
+    # When the source code ends while still inside one or more indentation levels, close all of those blocks. For example, if the indentation stack is: [0, 4, 8] , two DEDENT tokens are needed before EOF.
     while len(indent_stack) > 1:
         indent_stack.pop()
 
@@ -682,9 +594,6 @@ def lex(code: str) -> list[Token]:
             )
         )
 
-    # EOF means "End Of File".
-    #
-    # It tells the parser that there are no more tokens to read.
     tokens.append(
         Token(
             type=TokenType.EOF,
