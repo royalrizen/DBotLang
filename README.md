@@ -15,7 +15,7 @@
 <br>
 
 <h1>
-  DBotLang
+  DBotLang (.dbot)
    <img src="assets/logo.png" alt="DBotLang Logo" width="35" align="center">
 </h1>
 
