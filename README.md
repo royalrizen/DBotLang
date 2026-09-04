@@ -3,7 +3,7 @@
 </div>
 <br>
 
-# DBotLang
+# DBotLang <img src="assets/logo.png" alt="DBotLang Banner" width="28">
 
 DBotLang is a programming language for building Discord bots. I wanted to make bot development easier by providing built-in concepts for commands, events, variables, and bot logic without the boilerplate of traditional bot frameworks.
 
@@ -30,3 +30,4 @@ More features will be added as the language develops.
 ```dbotlang
 command ping:
     return "Pong!"
+```
