@@ -33,8 +33,6 @@ DBotLang is a programming language for building Discord bots. I wanted to make b
 - Events
 - `if` / `else` statements
 - `return` statements
-- Keywords
-- Discord integration
 
 *More features will be added as the language develops.*
 
