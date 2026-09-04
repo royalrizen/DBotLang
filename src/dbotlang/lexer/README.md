@@ -13,7 +13,7 @@ The lexer converts DBotLang source code into **tokens** for the parser.
 - **Keywords** :: `bot`, `command`, `if`, `else`, `return`, etc.
 - **Identifiers** :: variable, bot, and command names.
 - **Strings** :: string literals such as `"Hello!"`.
-- **Numbers**:: integer and decimal values.
+- **Numbers** :: integer and decimal values.
 - **Booleans & Null** :: `true`, `false`, `null`.
 - **Operators & punctuation** :: `=`, `:`, and other defined symbols.
 - **Newlines** :: represented as `NEWLINE` tokens.
