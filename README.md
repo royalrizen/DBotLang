@@ -15,11 +15,17 @@
 
 <br>
 
-# DBotLang <img src="assets/logo.png" alt="DBotLang Logo" width="28">
+<h1>
+  DBotLang
+   <img src="assets/logo.png" alt="DBotLang Logo" width="35" align="center">
+</h1>
 
 DBotLang is a programming language for building Discord bots. I wanted to make bot development easier by providing built-in concepts for commands, events, variables, and bot logic without the boilerplate of traditional bot frameworks.
 
-## Features <img src="assets/features.png" alt="DBotLang Features" width="50">
+<h2>
+  Features
+   <img src="assets/features.png" alt="DBotLang Features" width="50" align="center">
+</h2>
 
 - Variables
 - Strings, numbers, booleans, and null
@@ -30,7 +36,7 @@ DBotLang is a programming language for building Discord bots. I wanted to make b
 - Keywords
 - Discord integration
 
-More features will be added as the language develops.
+*More features will be added as the language develops.*
 
 ## Example
 
